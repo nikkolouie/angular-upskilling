@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row mt-5 mb-3">
+        <div class="col-10">
+            <h1>List of Users</h1>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-primary" [routerLink]="['/sampleApp/add']" [queryParams]="{user: 0, filter: true}">
+                Add User
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <th><h5>Name</h5></th>
+                        <th><h5>Address</h5></th>
+                        <th><h5>Contact</h5></th>
+                        <th><h5>Actions</h5></th>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="is_loading">
+                            <tr>
+                                <td><div class="skeleton-loader" style="height: 20px;"></div></td>
+                                <td><div class="skeleton-loader" style="height: 20px;"></div></td>
+                                <td><div class="skeleton-loader" style="height: 20px;"></div></td>
+                                <td><div class="skeleton-loader" style="height: 20px;"></div></td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!is_loading && data.length == 0">
+                            <div>No results found.</div>
+                        </ng-container>
+                        <ng-container *ngIf="!is_loading && data.length > 0">
+                            <tr *ngFor="let da of data; let i = index">
+                                <td [routerLink]="['/sampleApp', da.id, 'view']" style="cursor: pointer; color: rgb(0, 119, 255);">{{da.firstName + " " + da.lastName}}</td>
+                                <td>{{da.address}}</td>
+                                <td>{{da.contact | phone}}</td>
+                                <td>
+                                    <a href="#">Edit</a> 
+                                    <a class="mx-3" (click)="deletes(i)" style="cursor: pointer;">Delete</a> 
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
